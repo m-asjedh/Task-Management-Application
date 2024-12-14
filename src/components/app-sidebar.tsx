@@ -1,11 +1,4 @@
-import {
-  BellRing,
-  ChartLine,
-  House,
-  Lightbulb,
-  ListChecks,
-  Settings,
-} from "lucide-react";
+"use client";
 
 import {
   Sidebar,
@@ -16,6 +9,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import {
+  BellRing,
+  ChartLine,
+  House,
+  Lightbulb,
+  ListChecks,
+  Settings,
+} from "lucide-react";
 
 const items = [
   {
@@ -56,7 +57,7 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-2">
               {items.map((item) => (
                 <SidebarMenuItem
                   key={item.title}
@@ -64,7 +65,7 @@ export function AppSidebar() {
                     item.title === "Tasks"
                       ? "bg-blue-500 text-white"
                       : "bg-gray-200 text-gray-700"
-                  }  rounded-lg transition-all duration-200`}
+                  }  rounded-lg transition-all duration-200 `}
                 >
                   <SidebarMenuButton asChild>
                     <a

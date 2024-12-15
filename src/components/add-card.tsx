@@ -6,7 +6,7 @@ import PriorityStatus from "./priority-status";
 import { CircleCheck, Clock4 } from "lucide-react";
 import { useState } from "react";
 
-const TaskCard = () => {
+const AddTask = () => {
   const [selectedAssignee, setSelectedAssignee] = useState<{
     id: string;
     name: string;
@@ -53,4 +53,4 @@ const TaskCard = () => {
   );
 };
 
-export default TaskCard;
+export default AddTask;

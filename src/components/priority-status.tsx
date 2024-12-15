@@ -1,12 +1,15 @@
 "use-client";
 
-import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
 
-const PriorityStatus = () => {
-  const [priority, setPriority] = useState<string | null>(null);
-
+const PriorityStatus = ({
+  priority,
+  setPriority,
+}: {
+  setPriority: (pri: string) => void;
+  priority: string;
+}) => {
   const priorities = [
     {
       level: "Low",

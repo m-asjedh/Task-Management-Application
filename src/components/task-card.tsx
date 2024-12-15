@@ -1,17 +1,20 @@
 "use client";
 
+import { useState } from "react";
 import TaskCardAssigneeSelector from "./taskcard-assignee-selector";
 import TaskCardDueDateSelector from "./taskcard-duedate-selector";
 import PriorityStatus from "./priority-status";
 import { CircleCheck, Clock4 } from "lucide-react";
-import { useState } from "react";
+import { Task } from "@/lib/features/task/taskSlice";
 
-const TaskCard = () => {
+const TaskCardForm = ({ task }: { task: Task }) => {
+  const [taskName, setTaskName] = useState<string>(task.name);
   const [selectedAssignee, setSelectedAssignee] = useState<{
     id: string;
     name: string;
-  } | null>(null);
-  const [taskName, setTaskName] = useState<string>("");
+  } | null>(task.assignee);
+  const [dueDate, setDueDate] = useState<string>(task.dueDate || "");
+  const [priority, setPriority] = useState<string>(task.priority || "");
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow m-4 cursor-pointer">
@@ -38,9 +41,9 @@ const TaskCard = () => {
             assignee={selectedAssignee}
             selectAssignee={setSelectedAssignee}
           />
-          <TaskCardDueDateSelector />
+          <TaskCardDueDateSelector setDueDate={setDueDate} dueDate={dueDate} />
         </div>
-        <PriorityStatus />
+        <PriorityStatus setPriority={setPriority} priority={priority} />
       </div>
 
       <hr className="my-2 border-gray-300" />
@@ -53,4 +56,4 @@ const TaskCard = () => {
   );
 };
 
-export default TaskCard;
+export default TaskCardForm;

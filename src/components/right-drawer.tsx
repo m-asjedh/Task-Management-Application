@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
-
 import { ArrowRight, StickyNote, Trash2 } from "lucide-react";
 import profilePic from "../../public/assets/images/profile1.png";
 import StatusSelector from "./status-selector";
@@ -9,18 +8,27 @@ import AssigneeSelector from "./assignee-selector";
 import PrioritySelector from "./priority-selector";
 import SecBtn from "./sect-btn";
 
-const RightDrawer = ({
-  isOpen,
-  onClose,
-}: {
+interface RightDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-}) => {
-  const [dueDate, setDueDate] = useState<Date | null>(new Date("2024-08-11"));
-  const [assignee, setAssignee] = useState<string | null>("John Taylor");
-  const [priority, setPriority] = useState<string>("High");
-  const [status, setStatus] = useState("Todo");
+  dueDate: Date | null;
+  setDueDate: (date: Date | null) => void;
+  assignee: string | null;
+  setAssignee: (name: string | null) => void;
+  priority: string;
+  setPriority: (priority: string) => void;
+}
 
+const RightDrawer: React.FC<RightDrawerProps> = ({
+  isOpen,
+  onClose,
+  dueDate,
+  setDueDate,
+  assignee,
+  setAssignee,
+  priority,
+  setPriority,
+}) => {
   const availableAssignees = [
     { name: "John Taylor", image: profilePic },
     { name: "Sarah Connor", image: profilePic },
@@ -32,10 +40,9 @@ const RightDrawer = ({
   return (
     <Drawer open={isOpen} onOpenChange={onClose}>
       <DrawerContent className="w-[400px] p-4">
-        <div className="flex justify-between items-center cursor-pointer ">
-          <div>
-            <SecBtn bgColour="bg-white text-black " statusText="Completed" />
-          </div>
+        {/* Header Section */}
+        <div className="flex justify-between items-center cursor-pointer">
+          <SecBtn bgColour="bg-white text-black" statusText="Completed" />
           <div className="flex space-x-5">
             <Trash2 size={18} className="cursor-pointer" />
             <ArrowRight
@@ -48,12 +55,17 @@ const RightDrawer = ({
 
         <hr className="my-4 border-gray-300" />
 
+        {/* Task Title */}
         <div className="border p-4 rounded-md font-bold mb-4">
           <h1>Project Setup and Initial Configurations</h1>
         </div>
 
+        {/* Selectors */}
         <div className="w-[80%] space-y-5">
-          <StatusSelector status={status} onChangeStatus={setStatus} />
+          <StatusSelector
+            status="Todo"
+            onChangeStatus={(newStatus) => console.log(newStatus)}
+          />
           <DueDateSelector
             dueDate={dueDate}
             handleDateChange={(date) => setDueDate(date || null)}
@@ -72,6 +84,7 @@ const RightDrawer = ({
           />
         </div>
 
+        {/* Description */}
         <div className="mt-10">
           <div className="flex space-x-3 justify-start items-center">
             <StickyNote size={12} color="gray" />

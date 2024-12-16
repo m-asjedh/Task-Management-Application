@@ -1,115 +1,146 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { ArrowRight, StickyNote, Trash2 } from "lucide-react";
-import profilePic from "../../public/assets/images/profile1.png";
+
 import StatusSelector from "./status-selector";
 import DueDateSelector from "./duedate-selector";
-import AssigneeSelector from "./assignee-selector";
 import PrioritySelector from "./priority-selector";
 import SecBtn from "./sect-btn";
+import { deleteTask, Task, updateTask } from "../lib/features/task/taskSlice";
+import DeleteConfirmationModal from "./delete-confirmation-modal";
+import TaskCardAssigneeSelector from "./taskcard-assignee-selector";
 
 interface RightDrawerProps {
+  taskStatus: "Todo" | "In Progress" | "Completed";
   isOpen: boolean;
   onClose: () => void;
-  dueDate: Date | null;
+  taskId: string;
+  taskName: string;
+  dueDate: string | null;
   setDueDate: (date: Date | null) => void;
-  assignee: string | null;
-  setAssignee: (name: string | null) => void;
+  assignee: { id: string; name: string } | null;
+  setAssignee: (assignee: { id: string; name: string } | null) => void;
   priority: string;
   setPriority: (priority: string) => void;
+  description: string;
 }
 
-const RightDrawer: React.FC<RightDrawerProps> = ({
+const RightDrawer = ({
+  taskStatus,
   isOpen,
   onClose,
+  taskId,
+  taskName,
   dueDate,
   setDueDate,
   assignee,
   setAssignee,
   priority,
   setPriority,
-}) => {
-  const availableAssignees = [
-    { name: "John Taylor", image: profilePic },
-    { name: "Sarah Connor", image: profilePic },
-    { name: "Asad Ahmed", image: profilePic },
-  ];
+  description,
+}: RightDrawerProps) => {
+  const dispatch = useDispatch();
+
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleUpdateTask = (updates: Partial<Task>) => {
+    dispatch(updateTask({ id: taskId, updates }));
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteTask(taskId));
+    setModalOpen(false);
+    onClose();
+  };
 
   const priorities = ["High", "Medium", "Low"];
 
   return (
-    <Drawer open={isOpen} onOpenChange={onClose}>
-      <DrawerContent className="w-[400px] p-4">
-        {/* Header Section */}
-        <div className="flex justify-between items-center cursor-pointer">
-          <SecBtn bgColour="bg-white text-black" statusText="Completed" />
-          <div className="flex space-x-5">
-            <Trash2 size={18} className="cursor-pointer" />
-            <ArrowRight
-              size={18}
-              onClick={onClose}
-              className="cursor-pointer"
+    <>
+      <Drawer open={isOpen} onOpenChange={onClose}>
+        <DrawerContent className="w-[400px] p-4">
+          <div className="flex justify-between items-center cursor-pointer">
+            <SecBtn bgColour="bg-white text-black" statusText="Completed" />
+            <div className="flex space-x-5">
+              <Trash2
+                size={18}
+                className="cursor-pointer"
+                onClick={() => setModalOpen(true)}
+              />
+              <ArrowRight
+                size={18}
+                onClick={onClose}
+                className="cursor-pointer"
+              />
+            </div>
+          </div>
+
+          <hr className="my-4 border-gray-300" />
+
+          {/* Task Title */}
+          <div className="border p-4 rounded-md font-bold mb-4">{taskName}</div>
+
+          {/* Selectors */}
+          <div className="w-[80%] space-y-5">
+            <StatusSelector status={taskStatus} />
+            <DueDateSelector
+              dueDate={dueDate ? dueDate.toString() : null}
+              handleDateChange={(date) => {
+                if (date) {
+                  setDueDate(date);
+                  handleUpdateTask({ dueDate: date.toString() });
+                }
+              }}
+              removeDate={() => setDueDate(null)}
+            />
+            <TaskCardAssigneeSelector
+              assignee={assignee}
+              selectAssignee={(assignee) => setAssignee(assignee)}
+              mainDivContainerStyles="gap-12"
+            />
+
+            <PrioritySelector
+              priority={priority}
+              priorities={priorities}
+              selectPriority={(newPriority) => {
+                setPriority(newPriority);
+                handleUpdateTask({ priority: newPriority });
+              }}
             />
           </div>
-        </div>
 
-        <hr className="my-4 border-gray-300" />
+          <hr className="my-4 border-gray-300" />
 
-        {/* Task Title */}
-        <div className="border p-4 rounded-md font-bold mb-4">
-          <h1>Project Setup and Initial Configurations</h1>
-        </div>
-
-        {/* Selectors */}
-        <div className="w-[80%] space-y-5">
-          <StatusSelector
-            status="Todo"
-            onChangeStatus={(newStatus) => console.log(newStatus)}
-          />
-          <DueDateSelector
-            dueDate={dueDate}
-            handleDateChange={(date) => setDueDate(date || null)}
-            removeDate={() => setDueDate(null)}
-          />
-          <AssigneeSelector
-            assignee={assignee}
-            availableAssignees={availableAssignees}
-            selectAssignee={(name) => setAssignee(name)}
-            removeAssignee={() => setAssignee(null)}
-          />
-          <PrioritySelector
-            priority={priority}
-            priorities={priorities}
-            selectPriority={(newPriority) => setPriority(newPriority)}
-          />
-        </div>
-
-        {/* Description */}
-        <div className="mt-10">
-          <div className="flex space-x-3 justify-start items-center">
-            <StickyNote size={12} color="gray" />
-            <div className="text-[14px] text-gray-500">Description</div>
+          {/* Description */}
+          <div className="mt-10">
+            <div className="flex space-x-3 justify-start items-center">
+              <StickyNote size={12} color="gray" />
+              <div className="text-[14px] text-gray-500">Description</div>
+            </div>
+            <div className="border p-4 rounded-md mt-2 text-[12px]">
+              <textarea
+                className="w-full p-2 rounded focus:outline-none"
+                rows={8}
+                placeholder="Add task description here..."
+                value={description || ""}
+                onChange={(e) => {
+                  handleUpdateTask({ description: e.target.value });
+                }}
+              />
+            </div>
           </div>
-          <div className="border p-4 rounded-md mt-2 text-[12px]">
-            <p>
-              This task involves setting up the project environment and
-              configuring all necessary tools and frameworks to ensure smooth
-              development. The steps include:
-            </p>
-            <ol className="list-decimal pl-5">
-              <li>Repository Setup</li>
-              <li>Environment Setup</li>
-              <li>Dependency Installation</li>
-              <li>Configuration Management</li>
-              <li>Database Setup</li>
-              <li>Version Control Integration</li>
-              <li>Testing and Validation</li>
-              <li>Documentation</li>
-            </ol>
-          </div>
-        </div>
-      </DrawerContent>
-    </Drawer>
+        </DrawerContent>
+      </Drawer>
+
+      <DeleteConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleDelete}
+      />
+    </>
   );
 };
 

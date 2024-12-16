@@ -6,7 +6,7 @@ import { addTask } from "../lib/features/task/taskSlice";
 import TaskCardAssigneeSelector from "./taskcard-assignee-selector";
 import TaskCardDueDateSelector from "./taskcard-duedate-selector";
 import PriorityStatus from "./priority-status";
-import { CircleCheck, Clock4 } from "lucide-react";
+import { CircleCheck } from "lucide-react";
 
 const AddCard = ({
   status,
@@ -61,8 +61,6 @@ const AddCard = ({
 
       <hr className="my-2 border-gray-300" />
 
-      <div className="text-gray-600 text-sm mb-4">Project description</div>
-
       <div className="flex items-center justify-between text-sm">
         <div className="flex items-center space-x-2">
           <TaskCardAssigneeSelector
@@ -75,11 +73,6 @@ const AddCard = ({
       </div>
 
       <hr className="my-2 border-gray-300" />
-
-      <div className="text-[12px] flex items-center space-x-2 text-gray-600">
-        <Clock4 size={14} />
-        <span>Should complete within 3 days ago</span>
-      </div>
     </div>
   );
 };

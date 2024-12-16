@@ -51,7 +51,7 @@ export default function Home() {
             {tasks
               ?.filter((tsk) => tsk.status === status)
               .map((tsk) => (
-                <TaskCardForm key={tsk.id} task={tsk} />
+                <TaskCardForm key={tsk.id} task={tsk} taskStatus={status} />
               ))}
 
             {status === "Todo" &&

@@ -9,7 +9,7 @@ interface SectionTabProps {
 
 const SectionTab = ({ colour, status }: SectionTabProps) => {
   return (
-    <div className="flex justify-between items-center p-4 bg-white rounded-md shadow-sm m-4">
+    <div className="flex justify-between items-center p-4 bg-white rounded-md shadow-custom   m-4">
       <div className="flex items-center space-x-4">
         <div
           className={`w-6 h-6 bg-white rounded-full flex justify-center items-center ${colour}`}

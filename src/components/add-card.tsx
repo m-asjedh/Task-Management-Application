@@ -66,6 +66,10 @@ const AddCard = ({
           <TaskCardAssigneeSelector
             assignee={selectedAssignee}
             selectAssignee={setSelectedAssignee}
+            nameContainerStyles="hidden"
+            closeIconStyles="hidden"
+            divOneContainerStyles="hidden"
+            divTwoContainerStyles="hidden"
           />
           <TaskCardDueDateSelector setDueDate={setDueDate} dueDate={dueDate} />
         </div>

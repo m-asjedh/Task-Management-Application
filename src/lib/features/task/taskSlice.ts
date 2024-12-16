@@ -67,9 +67,26 @@ const taskSlice = createSlice({
       state.tasks = state.tasks.filter((task) => task.id !== taskId);
       saveTasksToLocalStorage(state.tasks); // Save updated tasks to localStorage
     },
+    updateTaskStatusByDragAndDrop(
+      state,
+      action: PayloadAction<{
+        id: string;
+        newStatus: "Todo" | "In Progress" | "Completed";
+      }>
+    ) {
+      const task = state.tasks.find((task) => task.id === action.payload.id);
+      if (task) {
+        task.status = action.payload.newStatus;
+      }
+    },
   },
 });
 
 // Export actions and reducer
-export const { addTask, updateTask, deleteTask } = taskSlice.actions;
+export const {
+  addTask,
+  updateTask,
+  deleteTask,
+  updateTaskStatusByDragAndDrop,
+} = taskSlice.actions;
 export default taskSlice.reducer;

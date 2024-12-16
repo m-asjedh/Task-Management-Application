@@ -38,15 +38,23 @@ export default function Home() {
     "Completed",
   ];
 
+  const getTaskCount = (status: "Todo" | "In Progress" | "Completed") => {
+    return tasks.filter((tsk) => tsk.status === status).length;
+  };
+
   return (
-    <div className="w-full h-full bg-gray-100">
+    <div className="w-full h-screen bg-gray-100">
       <div className="flex m-4">
         {taskStatuses.map((status) => (
           <div
             key={status}
             className="flex-1 border-2 border-dotted border-gray-400 rounded-lg m-3"
           >
-            <SectionTab colour={"border border-yellow-500"} status={status} />
+            <SectionTab
+              colour={"border border-yellow-500"}
+              status={status}
+              count={getTaskCount(status)}
+            />
 
             {tasks
               ?.filter((tsk) => tsk.status === status)

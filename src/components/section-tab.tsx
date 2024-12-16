@@ -5,9 +5,10 @@ import { Plus } from "lucide-react";
 interface SectionTabProps {
   colour: string;
   status: string;
+  count: number;
 }
 
-const SectionTab = ({ colour, status }: SectionTabProps) => {
+const SectionTab = ({ colour, status, count }: SectionTabProps) => {
   return (
     <div className="flex justify-between items-center p-4 bg-white rounded-md shadow-custom   m-4">
       <div className="flex items-center space-x-4">
@@ -18,7 +19,7 @@ const SectionTab = ({ colour, status }: SectionTabProps) => {
         <div className="text-lg font-medium">{status}</div>
 
         <div className="w-6 h-6 bg-blue-200 text-blue-800 rounded-full text-sm font-semibold flex items-center justify-center ">
-          <div>3</div>
+          <div>{count}</div>
         </div>
       </div>
 

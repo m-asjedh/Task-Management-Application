@@ -32,7 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ClientProvider>
-          <main>
+          <main className="max-md:hidden">
             <Header />
             <SidebarProvider>
               <AppSidebar />

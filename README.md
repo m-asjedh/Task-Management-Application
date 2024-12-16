@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🚀 Features
+## **Create New Tasks:**
 
-## Getting Started
+Add tasks with fields like Task Name, Priority, Due Date, Assignee, and Status.
+Validates all fields before saving.
+Persists tasks in local storage.
 
-First, run the development server:
+# Task Details Drawer:
+Click on any task to view detailed information.
+Edit fields like Priority, Due Date, Assignee, and Description.
+Auto-save functionality for seamless updates.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# Delete Tasks:
+Delete tasks with a confirmation popup for safety.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Dynamic Remaining Time:
+Displays the time left or overdue dynamically based on the Due Date.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Responsive UI:
+Only supports large screens
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# State Management:
+Redux is used to manage tasks and persist them in local storage.
 
-## Learn More
+Note: Drag-and-drop functionality for moving tasks between sections is currently not implemented.
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ **Technology Stack**
+Framework: Next.js
+Language: TypeScript
+UI Components: ShadCN UI
+State Management: Redux
+Styling: TailwindCSS
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ **Getting Started**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Follow the instructions below to get the app up and running on your local machine:
 
-## Deploy on Vercel
+1. ### `git clone https://github.com/m-asjedh/Task-Management-Application.git`
+2. ### `cd task-management-app`
+3. ### `npm install`
+4. ### `npm run dev`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ **Video of Using the application**
+
+
+
+
+https://github.com/user-attachments/assets/9f9f7295-5a06-4a57-add4-3326389c50d5
+
+

@@ -16,7 +16,7 @@ const StatusSelector = ({
   status,
   onStatusChange,
 }: {
-  status: string | null; // Allow null when no status is set
+  status: string | null;
   onStatusChange: (status: "Todo" | "In Progress" | "Completed") => void;
 }) => {
   const [open, setOpen] = useState(false);
@@ -29,7 +29,7 @@ const StatusSelector = ({
     newStatus: "Todo" | "In Progress" | "Completed"
   ) => {
     onStatusChange(newStatus);
-    setOpen(false); // Close the popover after selection
+    setOpen(false);
   };
 
   return (

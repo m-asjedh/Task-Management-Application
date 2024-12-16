@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { ArrowRight, StickyNote, Trash2 } from "lucide-react";
-
 import StatusSelector from "./status-selector";
 import DueDateSelector from "./duedate-selector";
 import PrioritySelector from "./priority-selector";
@@ -45,6 +44,9 @@ const RightDrawer = ({
   const dispatch = useDispatch();
 
   const [isModalOpen, setModalOpen] = useState(false);
+  const [status, setStatus] = useState<
+    "Todo" | "In Progress" | "Completed" | null
+  >(taskStatus);
 
   const handleUpdateTask = (updates: Partial<Task>) => {
     dispatch(updateTask({ id: taskId, updates }));
@@ -54,6 +56,13 @@ const RightDrawer = ({
     dispatch(deleteTask(taskId));
     setModalOpen(false);
     onClose();
+  };
+
+  const handleStatusChange = (
+    newStatus: "Todo" | "In Progress" | "Completed" | null
+  ) => {
+    setStatus(newStatus);
+    handleUpdateTask({ status: newStatus || undefined });
   };
 
   const priorities = ["High", "Medium", "Low"];
@@ -80,12 +89,13 @@ const RightDrawer = ({
 
           <hr className="my-4 border-gray-300" />
 
-          {/* Task Title */}
           <div className="border p-4 rounded-md font-bold mb-4">{taskName}</div>
 
-          {/* Selectors */}
           <div className="w-[80%] space-y-5">
-            <StatusSelector status={taskStatus} />
+            <StatusSelector
+              status={status}
+              onStatusChange={handleStatusChange}
+            />
             <DueDateSelector
               dueDate={dueDate ? dueDate.toString() : null}
               handleDateChange={(date) => {
@@ -98,10 +108,12 @@ const RightDrawer = ({
             />
             <TaskCardAssigneeSelector
               assignee={assignee}
-              selectAssignee={(assignee) => setAssignee(assignee)}
+              selectAssignee={(assignee) => {
+                setAssignee(assignee);
+                handleUpdateTask({ assignee });
+              }}
               mainDivContainerStyles="gap-12"
             />
-
             <PrioritySelector
               priority={priority}
               priorities={priorities}
@@ -114,7 +126,6 @@ const RightDrawer = ({
 
           <hr className="my-4 border-gray-300" />
 
-          {/* Description */}
           <div className="mt-10">
             <div className="flex space-x-3 justify-start items-center">
               <StickyNote size={12} color="gray" />

@@ -25,7 +25,6 @@ const AddCard = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Check if all fields are filled
     if (taskName && selectedAssignee && dueDate && priority) {
       const newTask = {
         id: Math.random().toString(36).substr(2, 9),
@@ -37,11 +36,10 @@ const AddCard = ({
       };
 
       dispatch(addTask(newTask));
-      setIsCompleted(true); // Mark the form as completed
+      setIsCompleted(true);
     }
   }, [taskName, selectedAssignee, dueDate, priority, status, dispatch]);
 
-  // Prevent rendering the form after completion
   if (isCompleted) return null;
 
   return (

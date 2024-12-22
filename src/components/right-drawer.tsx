@@ -11,6 +11,7 @@ import SecBtn from "./sect-btn";
 import { deleteTask, Task, updateTask } from "../lib/features/task/taskSlice";
 import DeleteConfirmationModal from "./delete-confirmation-modal";
 import TaskCardAssigneeSelector from "./taskcard-assignee-selector";
+import { on } from "events";
 
 interface RightDrawerProps {
   taskStatus: "Todo" | "In Progress" | "Completed";
@@ -77,7 +78,10 @@ const RightDrawer = ({
               <Trash2
                 size={18}
                 className="cursor-pointer"
-                onClick={() => setModalOpen(true)}
+                onClick={() => {
+                  setModalOpen(true);
+                  onClose();
+                }}
               />
               <ArrowRight
                 size={18}

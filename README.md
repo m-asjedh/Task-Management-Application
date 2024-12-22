@@ -10,6 +10,11 @@ Click on any task to view detailed information.
 Edit fields like Priority, Due Date, Assignee, and Description.
 Auto-save functionality for seamless updates.
 
+# Task Status Update
+Tasks are moved between sections (Todo, In Progress, and Completed) by updating the Task Status in the task details drawer.
+The status change automatically moves the task to the corresponding column in the dashboard.
+This provides an intuitive way to manage task progress directly from the task details drawer.
+
 # Delete Tasks:
 Delete tasks with a confirmation popup for safety.
 
@@ -43,9 +48,6 @@ Follow the instructions below to get the app up and running on your local machin
 
 ## 🛠️ **Video of Using the application**
 
-
-
-
-https://github.com/user-attachments/assets/9f9f7295-5a06-4a57-add4-3326389c50d5
+https://github.com/user-attachments/assets/5788665b-895b-4223-943b-72d7bf612966
 
 
